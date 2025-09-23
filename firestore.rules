@@ -1,0 +1,127 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Complaints collection - for social feed and admin portal
+    match /complaints/{complaintId} {
+      // Allow authenticated users to create and read complaints
+      allow create, read: if request.auth != null;
+      
+      // Allow authenticated users to update comments and votes
+      allow update: if request.auth != null && (
+        // Allow updating comments, votes, and user vote tracking
+        request.resource.data.diff(resource.data).affectedKeys().hasAny(['comments', 'upvotes', 'downvotes', 'userUpvotes', 'userDownvotes']) ||
+        // Allow admins to update status
+        request.auth.token.admin == true
+      );
+      
+      // Only super admins can delete
+      allow delete: if request.auth != null && 
+        request.auth.token.admin == true;
+    }
+    
+    // Issues collection - core security rules
+    match /issues/{issueId} {
+      // Anyone can create an issue (citizens reporting)
+      allow create: if request.auth != null;
+      
+      // Read access: 
+      // - Issue creator can read their own issues
+      // - Admins can read issues assigned to their authority
+      // - Super admins can read all issues
+      allow read: if request.auth != null && (
+        // Issue creator
+        resource.data.userId == request.auth.uid ||
+        // Authority admin
+        isAuthorityAdmin(resource.data.assignedTo) ||
+        // Super admin
+        request.auth.token.admin == true
+      );
+      
+      // Update access:
+      // - Authority admins can update issues assigned to them
+      // - Super admins can update any issue
+      allow update: if request.auth != null && (
+        isAuthorityAdmin(resource.data.assignedTo) ||
+        request.auth.token.admin == true
+      ) && 
+      // Prevent unauthorized field updates
+      validateIssueUpdate();
+      
+      // Delete: Only super admins
+      allow delete: if request.auth != null && 
+        request.auth.token.admin == true;
+    }
+    
+    // Authorities collection
+    match /authorities/{authorityId} {
+      // Read: Authority admins can read their own authority data
+      // Super admins can read all
+      allow read: if request.auth != null && (
+        isAuthorityAdmin(authorityId) ||
+        request.auth.token.admin == true
+      );
+      
+      // Write: Only super admins can modify authority data
+      allow write: if request.auth != null && 
+        request.auth.token.admin == true;
+    }
+    
+    // Admins collection - maps user IDs to authority IDs
+    match /admins/{userId} {
+      // Users can read their own admin record
+      allow read: if request.auth != null && 
+        request.auth.uid == userId;
+      
+      // Only super admins can write admin records
+      allow write: if request.auth != null && 
+        request.auth.token.admin == true;
+    }
+    
+    // Assignment logs - for monitoring and analytics
+    match /assignment_logs/{logId} {
+      // Only super admins can read logs
+      allow read: if request.auth != null && 
+        request.auth.token.admin == true;
+      
+      // Only Cloud Functions can write logs
+      allow write: if false;
+    }
+    
+    // User profiles
+    match /users/{userId} {
+      // Users can read and write their own profile
+      allow read, write: if request.auth != null && 
+        request.auth.uid == userId;
+      
+      // Super admins can read all profiles
+      allow read: if request.auth != null && 
+        request.auth.token.admin == true;
+    }
+    
+    // FCM tokens for push notifications
+    match /fcm_tokens/{tokenId} {
+      // Users can manage their own tokens
+      allow read, write: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+      
+      // Cloud Functions can read tokens for notifications
+      allow read: if request.auth == null; // Cloud Functions context
+    }
+    
+    // Helper functions
+    function isAuthorityAdmin(authorityId) {
+      return request.auth != null && 
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.authorityId == authorityId;
+    }
+    
+    function validateIssueUpdate() {
+      // Allow updates to specific fields only
+      let allowedFields = ['status', 'remarks', 'updatedAt', 'assignedTo', 'assignedAt', 'assignmentMethod'];
+      return request.resource.data.keys().hasAll(resource.data.keys()) &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(allowedFields);
+    }
+    
+  }
+}

@@ -1,0 +1,36 @@
+﻿# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/*.log
+
+# Android
+**/local.properties
+**/.gradle/
+**/gradle-wrapper.jar
+**/captures/
+**/generated/
+**/outputs/
+**/intermediates/
+**/google-services.json
+
+# iOS
+**/Pods/
+**/Podfile.lock
+**/DerivedData/
+**/Runner.xcworkspace/xcuserdata
+**/GoogleService-Info.plist
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Web build
+build/web/
+
+# Node (Cloud Functions)
+functions/node_modules/
