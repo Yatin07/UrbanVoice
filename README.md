@@ -92,70 +92,56 @@ Copy code
 - Android Studio / VS Code  
 - Android Emulator or physical device  
 
-### ⚡ Installation
+## ⚙️ Installation
+
+### 1. Clone the repository
 ```bash
-# Clone repository
 git clone https://github.com/your-username/civicconnect_app.git
-
-# Navigate to project
-cd SIH/civicconnect_app
-
-# Install dependencies
+cd civicconnect_app
+2. Install dependencies
+bash
+Copy code
 flutter pub get
-
-# Run app
+3. Run the app
+bash
+Copy code
 flutter run
-🧪 Testing
-Demo login: Any phone number + OTP 123456
-
-Sample preloaded data for quick testing
-
-Use hot reload (r in terminal) during development
-
-🏗️ Development
-Models → Data structures and business logic
-
-Providers → State management & data handling
-
-Screens → Full UI screens
-
-Widgets → Reusable UI components
-
-Key Dependencies
-provider → State management
-
-go_router → Navigation
-
-shared_preferences → Local storage
-
-uuid → Unique ID generation
-
-url_launcher → Open links
-
-intl → Internationalization
-
-📦 Build & Deploy
-Android
+4. Setup backend
 bash
 Copy code
-flutter build apk --release
-iOS
-bash
-Copy code
-flutter build ios --release
-Web
-bash
-Copy code
-flutter build web --release
+cd backend
+npm install
+npm start
+📖 Usage
+Open the app on your device.
+
+Sign up or log in with your credentials.
+
+File a complaint by uploading an image + description.
+
+Track the status in real time.
+
+Upvote issues that affect your community.
+
+🎯 Applications
+Citizens: Report and track civic problems.
+
+Authorities: Monitor, manage, and resolve issues efficiently.
+
+Community: Encourage transparency and engagement through upvotes.
+
+🌍 Real-Life Impact
+Imagine you see an overflowing garbage bin in your neighborhood. Instead of calling officials and waiting endlessly, you open the CivicConnect App, snap a photo, geotag it, and submit. Neighbors upvote it, making it a top priority. The municipal authority gets notified instantly and resolves it faster.
+
 🤝 Contributing
-We welcome contributions! 🎉
+We welcome contributions!
 
-Fork the project
+Fork the repo
 
-Create your feature branch (git checkout -b feature-name)
+Create a new branch (feature/awesome-feature)
 
-Commit changes (git commit -m "Add new feature")
+Commit your changes
 
-Push to branch (git push origin feature-name)
+Push the branch and create a Pull Request
 
-Open a Pull Request 🚀
+
