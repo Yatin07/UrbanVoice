@@ -98,50 +98,64 @@ Copy code
 ```bash
 git clone https://github.com/your-username/civicconnect_app.git
 cd civicconnect_app
-2. Install dependencies
-bash
-Copy code
+```
+
+### 2. Install dependencies
+```bash
 flutter pub get
-3. Run the app
-bash
-Copy code
+```
+
+### 3. Run the app
+```bash
 flutter run
-4. Setup backend
-bash
-Copy code
+```
+
+### 4. Setup backend
+```bash
 cd backend
 npm install
 npm start
-📖 Usage
-Open the app on your device.
+```
 
-Sign up or log in with your credentials.
+## 📖 Usage
+- Open the app on your device.
+- Sign up or log in with your credentials.
+- File a complaint by uploading an image + description.
+- Track the status in real time.
+- Upvote issues that affect your community.
 
-File a complaint by uploading an image + description.
+## 🎯 Applications
+- **Citizens**: Report and track civic problems.
+- **Authorities**: Monitor, manage, and resolve issues efficiently.
+- **Community**: Encourage transparency and engagement through upvotes.
 
-Track the status in real time.
-
-Upvote issues that affect your community.
-
-🎯 Applications
-Citizens: Report and track civic problems.
-
-Authorities: Monitor, manage, and resolve issues efficiently.
-
-Community: Encourage transparency and engagement through upvotes.
-
-🌍 Real-Life Impact
+## 🌍 Real-Life Impact
 Imagine you see an overflowing garbage bin in your neighborhood. Instead of calling officials and waiting endlessly, you open the CivicConnect App, snap a photo, geotag it, and submit. Neighbors upvote it, making it a top priority. The municipal authority gets notified instantly and resolves it faster.
 
-🤝 Contributing
+## 🤝 Contributing
 We welcome contributions!
 
-Fork the repo
+1. Fork the repo
+2. Create a new branch (feature/awesome-feature)
+3. Commit your changes
+4. Push the branch and create a Pull Request
 
-Create a new branch (feature/awesome-feature)
+---
 
-Commit your changes
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Push the branch and create a Pull Request
+---
 
+---
 
+## 📞 Contact
+For any inquiries, please contact us at [yatinpatilyp07@gmail.com.com].
+
+---
+
+## 📅 Timeline
+- **Project Start**: January 2024
+- **Hackathon Submission**: March 2024
+
+---
